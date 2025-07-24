@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package gomoneypb.accounts.v1;
+
+import "gomoneypb/v1/common.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "GoMoney.Client.Accounts.V1";
+
+// Accounts service for managing financial accounts
+service AccountsService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc CreateBulk(CreateAccountsBulkRequest) returns (CreateAccountsBulkResponse);
+  rpc List(ListRequest) returns (ListResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc Update(UpdateRequest) returns (UpdateResponse);
+  rpc Delete(DeleteRequest) returns (DeleteResponse);
+}
+
+message CreateRequest {
+  string name = 1;
+  string currency = 2;
+  string account_type = 3;
+  string description = 4;
+  gomoneypb.v1.Money initial_balance = 5;
+}
+
+message CreateResponse {
+  gomoneypb.v1.BaseResponse base = 1;
+  Account account = 2;
+}
+
+message CreateAccountsBulkRequest {
+  repeated CreateRequest accounts = 1;
+}
+
+message CreateAccountsBulkResponse {
+  gomoneypb.v1.BaseResponse base = 1;
+  repeated Account accounts = 2;
+}
+
+message ListRequest {
+  gomoneypb.v1.Pagination pagination = 1;
+}
+
+message ListResponse {
+  gomoneypb.v1.BaseResponse base = 1;
+  repeated Account accounts = 2;
+  gomoneypb.v1.PaginationResponse pagination = 3;
+}
+
+message GetRequest {
+  uint64 id = 1;
+}
+
+message GetResponse {
+  gomoneypb.v1.BaseResponse base = 1;
+  Account account = 2;
+}
+
+message UpdateRequest {
+  uint64 id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message UpdateResponse {
+  gomoneypb.v1.BaseResponse base = 1;
+  Account account = 2;
+}
+
+message DeleteRequest {
+  uint64 id = 1;
+}
+
+message DeleteResponse {
+  gomoneypb.v1.BaseResponse base = 1;
+}
+
+message Account {
+  uint64 id = 1;
+  string name = 2;
+  string currency = 3;
+  string account_type = 4;
+  string description = 5;
+  gomoneypb.v1.Money balance = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
