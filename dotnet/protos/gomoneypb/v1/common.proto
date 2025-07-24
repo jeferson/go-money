@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package gomoneypb.v1;
+
+option csharp_namespace = "GoMoney.Client.V1";
+
+// Common message types used across services
+message Money {
+  string amount = 1;
+  string currency = 2;
+}
+
+message Pagination {
+  uint32 page = 1;
+  uint32 limit = 2;
+}
+
+message PaginationResponse {
+  uint32 total = 1;
+  uint32 page = 2;
+  uint32 limit = 3;
+  uint32 pages = 4;
+}
+
+// Base response structure
+message BaseResponse {
+  bool success = 1;
+  string message = 2;
+}

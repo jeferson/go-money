@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package gomoneypb.users.v1;
+
+import "gomoneypb/v1/common.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "GoMoney.Client.Users.V1";
+
+// User service for authentication and user management
+service UsersService {
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Authenticate(AuthenticateRequest) returns (AuthenticateResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+}
+
+message CreateRequest {
+  string username = 1;
+  string password = 2;
+  string email = 3;
+}
+
+message CreateResponse {
+  gomoneypb.v1.BaseResponse base = 1;
+  User user = 2;
+}
+
+message AuthenticateRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message AuthenticateResponse {
+  gomoneypb.v1.BaseResponse base = 1;
+  string token = 2;
+  User user = 3;
+}
+
+message GetRequest {
+  uint64 id = 1;
+}
+
+message GetResponse {
+  gomoneypb.v1.BaseResponse base = 1;
+  User user = 2;
+}
+
+message User {
+  uint64 id = 1;
+  string username = 2;
+  string email = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}

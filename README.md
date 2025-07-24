@@ -19,7 +19,31 @@ It enables customizations through Lua scripting and external reporting with Graf
 - Import data from other finance apps (Firefly for now)
 - Scriptable and developer-friendly architecture
 - High test coverage and stable api
-- Multiple client libraries provided via [ConnectRPC](https://buf.build/xskydev/go-money-pb/sdks/main:protobuf) 
+- Multiple client libraries provided via [ConnectRPC](https://buf.build/xskydev/go-money-pb/sdks/main:protobuf)
+- **.NET Core 8 client library** for .NET applications
+
+## .NET Support
+
+GoMoney now includes a .NET Core 8 client library for easy integration with .NET applications. The client provides strongly-typed access to the GoMoney API using gRPC.
+
+### Quick Start (.NET)
+
+```csharp
+using GoMoney.Client;
+
+// Create client
+using var client = new GoMoneyClient("http://localhost:8080");
+
+// Use the API
+var response = await client.Users.CreateAsync(new CreateRequest
+{
+    Username = "myuser",
+    Password = "mypassword",
+    Email = "user@example.com"
+});
+```
+
+For detailed documentation, see [dotnet/README.md](dotnet/README.md). 
 
 ## Demo
 A demo instance of Go Money is available at [https://demo.go-money.top](https://demo.go-money.top) and grafana dashboards at [https://grafana.go-money.top](https://grafana.go-money.top).
